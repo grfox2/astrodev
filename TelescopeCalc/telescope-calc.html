@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--
+  Telescope Calculator Website (English)
+  Last Revision: 30 Jan 2021
+
+  Copyright (C) 2021 Felipe Gerardo Ramon Fox
+  See LICENSE or LICENSE.txt for license information.
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Telescope Calculator</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <div id="banner" class="headbanner">
+          <h1 id="title">Telescope Calculator</h1>
+          <nav id="linksbar" class="linksbar">
+            <a href="telescope-calc-es.html">Spanish</a>
+          </nav>
+        </div>
+      
+        <!--Introduction-->
+        <h3>Introduction</h3>
+        <section class="text-content">
+          <p class="text">When choosing a telescope, it is useful to know some quantities such as the power or magnification, the focal ratio, and
+           the resolving power or angular resolution. This calculator helps you to calculate these numbers. You just need three
+           basic parameters: the telescope's aperture diameter, its focal length, and the eyepiece's focal length. If you wish, you
+           can include a Barlow lens or a focal reducer. Introduce the required values below and
+           press calculate. The results will appear in the sections just under the input form.
+          </p>
+        </section>
+
+        <!--Calculator Form Section-->
+        <h3>Telescope Parameters</h3>
+        <section class="form-content">
+          <form id="magCalc" name="magCalc" class="subcontent">
+            <label for="telDiameter">Telescope Objective Diameter [mm]:</label>
+            <input id="telDiameter" name="telDiameter" type="text" value="0">
+            <br><br>
+            
+            <label for="telFocalLength">Telescope Focal Length [mm]:</label>
+            <input id="telFocalLength" name="telFocalLength" type="text" value="0">
+            <br><br>
+            
+            <label for="epFocalLength">Eyepiece Focal Length [mm]:</label>
+            <input id="epFocalLength" name="epFocalLength" type="text" value="0">
+            <br><br>
+            
+            <label for="includeBarlow">Include a Barlow Lens? </label>
+            <input id="includeBarlow" name="includeBarlow" type="checkbox" value="incBarlow">
+            <label id="barlowLabel" for="barlowPower" hidden>Barlow Power (x): </label>
+            <input id="barlowPower" name="barlowPower" type="text" value="1.0" hidden>
+            <br><br>
+            
+            <label for="includeFocalReducer">Include a Focal Reducer? </label>
+            <input id="includeFocalReducer" name="includeFocalReducer" type="checkbox" value="incFocalRed">
+            <label id="fReducerLabel" for="fReducerFactor" hidden>Focal Reduction Factor (x): </label>
+            <input id="fReducerFactor" name="fReducerFactor" type="text" value="1.0" hidden>
+            <br><br>
+            
+            <input id="calcMag" name="calcMag" type="button" value="Calculate">
+            <input id="resetBtn" name="resetBtn" type="button" value="Reset">
+          </form>
+        <br><br>
+        </section>
+        
+        <!--Magnitication results section-->
+        <h2>Results for Your Telescope</h2>
+        <h3>Magnification</h3>
+        <section class="text-content">
+          <hr> 
+          <div>
+              <p>Magnification:</p>
+              <p id="magResult" class="resultDisplay"></p>
+              <p>Lower Magnification Limit (assuming a 6mm pupil):</p>
+              <p id="lowerMagLimit" class="resultDisplay"></p>
+              <p>Upper Magnification Limit:</p>
+              <p id="upperMagLimit" class="resultDisplay"></p>
+          </div>
+          <hr>
+          <p>Formulas:</p>
+          <p class="equation">Magnification [x] = Telescope Focal Length [mm] / Eyepiece Focal Length [mm]</p>
+          <p class="equation">Lower Magnification Limit [x] = Telescope Diameter [mm]/ 6. (Assuming a 6mm pupil)</p>
+          <p class="equation">Upper Magnification Limit [x] &#8773; 2 * Telescope Diameter [mm]</p>
+          <a href="#magnification-desc">Go to explanation</a>
+          <hr>
+        </section>
+        
+        <!--Focal Ratio results section-->
+        <h3>Focal Ratio f/</h3>
+        <section class="text-content"> 
+          <hr>     
+          <div>
+              <p>Focal Ratio f/:</p>
+              <p id="fRatioResult" class="resultDisplay"><p>
+          </div>
+          <hr>
+          <p>Formula:</p>
+          <p class="equation">Focal Ratio f/ = Telescope Focal Length [mm] / Telescope Diameter [mm]</p>
+          <a href="#focal-ratio-desc">Go to explanation</a>
+          <hr>
+        </section>
+
+        <!--Resolving Power results section-->
+        <h3>Resolving Power</h3>
+        <section class="text-content">
+          <hr>
+          <div>
+              <p>Resolving power:</p>
+              <p id="dawesLimitRes" class="resultDisplay"><p>
+          </div>
+          <hr>
+          <p>Formula:</p>
+          <p class="equation">Resolving power [arcsec] = 116 / Telescope Diameter [mm]</p>
+          <p class="text">For example, the Hercules Globular Cluster (M13) is about 1200 arcsec wide, 
+             the Ring Nebula (M57) is approximately 230 arcsec wide, 
+            Albireo A and B are separated by about 35 arcsec, and the Cassini Division is less than 1 arcsec wide.
+          </p>
+          <a href="#resolution-desc">Go to explanation</a>
+          <hr>
+        </section> 
+
+        <!--Explanation of the results-->
+        <h2>What do these results mean?</h2>
+        
+        <!--Magnification description-->
+        <h3 id="magnification-desc">Magnification</h3>
+        <section class="text-content">
+          <p class="text">This is a measure of the telescope's power and it is calculated by dividing the telescope's focal length over the eyepiece's
+           focal length. This means that you can change your telescope's power if you change your eyepiece. The smaller the eyepiece's
+           focal length, the larger the magnification. Magnification can also be increased by using a Barlow lens. As you increase the 
+           power, the object will become larger, but this will be at the  cost of a dimmer image and a smaller field of view. Higher 
+           magnifications are recommended for observing planets, while deep sky objects are better viewed with intermediate or lower values 
+           depending on the object. A telescope's power has upper and lower limits that depend on the optics and physical limitations of 
+           the instrument. Their explanation can be found in more technical references. For our purpose, it is enough to know there is 
+           no real advantage of using very high magnifications.
+          </p>
+        </section>
+        
+        <!--Focal Ratio description-->
+        <h3 id="focal-ratio-desc">Focal Ratio f/</h3>
+        <section class="text-content">
+          <p class="text">This parameter, more known to photographers, is obtained from dividing the telescope's focal length by the telescope's objective 
+           diameter. A higher f/ number implies that the field of view will be smaller and the magnification higher. For an astrophotographer, 
+           a higher f/ ratio means that a given image will require a longer exposure time in comparison to a telescope with a lower f/ number.
+           As in photography, telescopes with a low f/ number are known as fast and those with a high value are regarded as slow. If you are
+           aiming to use your telescope for astrophotography, then this will be an important parameter to have in mind when choosing the right
+           equipment and planning your projects. Also, if your telescope's focal ratio is on the higher end, it is possible to decrease it by
+           attaching a focal reducer to it.
+          </p>
+        </section>
+        
+        <!--Resolving Power description-->
+        <h3 id="resolution-desc">Resolving Power</h3>
+        <section class="text-content">
+          <p class="text">The telescope's resolving power is a measure of the smallest detail (in terms of angular size) on the sky that you can discern
+           with your telescope. For example, if your telescope has a resolving power of 3 arcsec and a binary star has a separation of 1.5 arcsec,
+           you will not be able to see the individual stars and the system will appear as a bright point. The resolving power is directly related 
+           to the telescope's aperture diameter. A larger diameter will provide a higher resolving power. The resolution is also affected by 
+           diffraction (the bending of light waves as they enter the optical aperture), so it is really determined by the optical design of the 
+           instrument. For a representative value, we use Dawes' formula to calculate the resolving power. A 60mm telescope has a resolving power of
+           1.9 arcsec. As a reference, as given above, the Hercules Globular Cluster (M13) is about 1200 arcsec wide, the Ring Nebula (M57) is 
+           about 230 arcsec wide, the binary star system Albireo A and B are separated by about 35 arcsec, and the Cassini Division is less 
+           than 1 arcsec wide.
+          </p>
+        </section>
+
+        <!--Footer section-->
+        <div class="footer">
+          <footer>
+            <nav id="linksbar" class="linksbar">
+              <a href="#banner">Back to Top</a>
+            </nav>
+            <section class="text-content text-center">
+              Gerardo Ram&oacute;n Fox &copy; 2021
+            </section>
+          </footer>
+        </div>
+
+        <script src="js/telescopeCalculator.js"></script>
+        <script src="js/telescopeCalcInterface.js"></script>
+  </body>
+</html>

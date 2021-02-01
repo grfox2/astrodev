@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+  Telescope Calculator Website (Spanish)
+  Last Revision: 30 Jan 2021
+
+  Copyright (C) 2021 Felipe Gerardo Ramon Fox
+  See LICENSE or LICENSE.txt for license information.
+-->
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora de Telescopio</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <div id="banner" class="headbanner">
+          <h1 id="title">Calculadora de Telescopio</h1>
+          <nav id="linksbar" class="linksbar">
+            <a href="telescope-calc.html">English</a>
+          </nav>
+        </div>
+
+        <!--Introduction-->
+        <h3>Introducci&oacute;n</h3>
+        <section class="text-content">
+          <p class="text">Al elegir un telescopio, es &uacute;til conocer algunas cantidades tales como el aumento, la raz&oacute;n focal, y 
+           la resoluci&oacute;n angular. Esta calculadora le ayuda a calcular estos valores. Solo necesita conocer tres par&aacute;metros
+           de su telescopio: el di&aacute;metro de la apertura, su longitud focal y la longitud focal del ocular. Si lo desea,
+           tambi&eacute;n puede incluir una lente de Barlow o un reductor focal. Introduzca los valores
+           requeridos en la forma y presione calcular. Los resultados se mostrar&aacute;n en las secciones
+           debajo de la forma.
+          </p>
+        </section>
+
+        <!--Calculator Form Section-->
+        <h3>Par&aacute;metros del Telescopio</h3>
+        <section class="form-content">
+          <form id="magCalc" name="magCalc" class="subcontent">
+            <label for="telDiameter">Di&aacute;metro de la lente objetivo [mm]:</label>
+            <input id="telDiameter" name="telDiameter" type="text" value="0">
+            <br><br>
+            
+            <label for="telFocalLength">Longitud focal del telescopio [mm]:</label>
+            <input id="telFocalLength" name="telFocalLength" type="text" value="0">
+            <br><br>
+            
+            <label for="epFocalLength">Longitud focal del ocular [mm]:</label>
+            <input id="epFocalLength" name="epFocalLength" type="text" value="0">
+            <br><br>
+            
+            <label for="includeBarlow">&iquest;Incluir una lente de Barlow? </label>
+            <input id="includeBarlow" name="includeBarlow" type="checkbox" value="incBarlow">
+            <label id="barlowLabel" for="barlowPower" hidden>Aumento de Barlow (x): </label>
+            <input id="barlowPower" name="barlowPower" type="text" value="1.0" hidden>
+            <br><br>
+            
+            <label for="includeFocalReducer">&iquest;Incluir un reductor focal? </label>
+            <input id="includeFocalReducer" name="includeFocalReducer" type="checkbox" value="incFocalRed">
+            <label id="fReducerLabel" for="fReducerFactor" hidden>Factor de reducci&oacute;n focal (x): </label>
+            <input id="fReducerFactor" name="fReducerFactor" type="text" value="1.0" hidden>
+            <br><br>
+            
+            <input id="calcMag" name="calcMag" type="button" value="Calcular">
+            <input id="resetBtn" name="resetBtn" type="button" value="Limpiar">
+          </form>
+          <br><br>
+        </section>
+        
+        <!--Magnitication results section-->
+        <h2>Resultados para su Telescopio</h2>
+        <h3>Aumento</h3>
+        <section class="text-content">
+          <hr>
+          <div>
+            <p>Aumento:</p>
+            <p id="magResult" class="resultDisplay"></p>
+            <p>L&iacute;mite inferior de aumento (asumiendo una p&uacute;pila de 6 mm):</p>
+            <p id="lowerMagLimit" class="resultDisplay"></p>
+            <p>L&iacute;mite superior de aumento:</p>
+            <p id="upperMagLimit" class="resultDisplay"></p>
+          </div>
+          <hr>
+          <p>F&oacute;rmulas:</p>
+          <p class="equation">Aumento [x] = Longitud focal del telescopio [mm] / longitud focal del ocular [mm]</p>
+          <p class="equation">L&iacute;mite inferior de aumento [x] = di&aacute;metro del objetivo [mm]/ 6. (asumiendo una p&uacute;pila de 6 mm)</p>
+          <p class="equation">L&iacute;mite superior de aumento [x] &#8773; 2 * di&aacute;metro del objetivo [mm]</p>
+          <a href="#magnification-desc">Ir a la explicaci&oacute;n</a>
+          <hr>
+        </section>
+
+        <!--Focal Ratio results section-->
+        <h3>Raz&oacute;n Focal f/</h3>
+        <section class="text-content">
+          <hr>
+          <div>
+            <p>Raz&oacute;n Focal f/:</p>
+            <p id="fRatioResult" class="resultDisplay"><p>
+          </div>
+          <hr>
+          <p>F&oacute;rmula:</p>
+          <p class="equation">Raz&oacute;n Focal f/ = Longitud focal del telescopio [mm] / di&aacute;metro del objetivo [mm]</p>
+          <a href="#focal-ratio-desc">Ir a la explicaci&oacute;n</a>
+          <hr>
+        </section>
+
+        <!--Resolving Power results section-->
+        <h3>Resoluci&oacute;n Angular</h3>
+        <section class="text-content">
+          <hr>
+          <div>
+            <p>Resoluci&oacute;n Angular:</p>
+            <p id="dawesLimitRes" class="resultDisplay"><p>
+          </div>
+          <hr>
+          <p>F&oacute;rmula:</p>
+          <p class="equation">Resoluci&oacute;n Angular [seg. de arco] = 116 / di&aacute;metro del objetivo [mm]</p>
+          <hr>
+          <p class="text">Por ejemplo, el C&uacute;mulo Globular de H&eacute;rcules (M13) mide aproximadamente 1200 segundos de arco, 
+           la Nebulosa del Anillo (M57) tiene un tama&ntilde;o aproximado de 230 segundos de arco, 
+           Albireo A y B est&aacute;n separados por 35 segundos de arco, y la Divisi&oacute;n Cassini de Saturno
+           mide menos de 1 segundo de arco.
+          </p>
+          <a href="#resolution-desc">Ir a la explicaci&oacute;n</a>
+          <hr>
+        </section>    
+
+        <!--Explanation of the results-->
+        <h2>&iquest;Qu&eacute; significan estos resultados?</h3>
+        
+        <!--Magnification description-->
+        <h3 id="magnification-desc">Aumento</h3>
+        <section class="text-content">
+          <p class="text">Esto es una medida de la capacidad o potencia del telescopio y se obtiene al dividir la longitud focal del telescopio sobre la
+           longitud focal de la lente ocular. Esto significa que el aumento del telescopio se puede modificar al cambiar la lente ocular.
+           El aumento se incrementa al reducir la longitud focal del ocular. El aumento tambi&eacute;n se puede aumentar al incluir una
+           lente de Barlow en la configuraci&oacute;n del telescopio. Al incrementar el aumento, el objeto se ver&aacute; m&aacute;s grande
+           en el ocular; sin embargo, la im&aacute;gen se ver&aacute; menos brillante y el campo de visi&oacute;n ser&aacute; m&aacute;s
+           peque&ntilde;o. Es recomendable utilizar un aumento alto para observar planetas. En el caso de objetos de cielo profundo, se
+           recomienda usar un aumento menor seg&uacute;n el objeto. La capacidad de aumento de un telescopio tiene l&iacute;mites superiores
+           e inferiores seg&uacute;n la &oacute;ptica y las limitaciones f&iacute;sicas del instrumento. Su explicaci&oacute;n puede
+           encontrarse en referencias m&aacute;s t&eacute;cnicas. Por lo pronto, es suficiente tener conciencia de que hay un rango 
+           pr&aacute;ctico del aumento y que no hay mucha ventaja pr&aacute;ctica de utilizar valores demasiado altos.
+          </p>
+        </section>
+        
+        <!--Focal Ratio description-->
+        <h3 id="focal-ratio-desc">Raz&oacute;n Focal f/</h3>
+        <section class="text-content">
+          <p class="text">Este par&aacute;metro, m&aacute;s conocido en la fotograf&iacute;a, se obtiene al dividir la longitud focal del telescopio 
+            sobre el diametro de la lente objetivo. Un mayor n&uacute;mero mayor de f/ implica que el campo de visi&oacute; ser&aacute;
+            menor y el aumento mayor. Para la astrofotograf&iacute;a, un valor mayor de f/ significa que una im&aacute;gen dada requerir&aacute;
+            un mayor tiempo de exposici&oacute;n a comparaci&oacute;n de un telescopio con una menor raz&oacute;n focal. As&iacute; como
+            en la fotograf&iacute;a, los telescopios con un valor de f/ bajo se conocen como r&aacute;pidos y aqu&eacute;llos con un
+            valor alto se denominan lentos por su efecto en los tiempos de exposici&oacute;n. Si se busca utilizar el telescopio para la 
+            astrofotograf&iacute;a, la raz&oacute;n focal ser&aacute; un par&aacute;metro importante a considerar al momento de elergir el
+            equipo adecuado as&iacute; como para planear sus proyectos. Asimismo, si la raz&oacute;n focal de su telescopio es alta, es 
+            posible disminuirla acoplando un reductor focal al instrumento.
+          </p>
+        </section>
+        
+        <!--Resolving Power description-->
+        <h3 id="resolution-desc">Resoluci&oacute;n Angular</h3>
+        <section class="text-content">
+          <p class="text">La resoluci&oacute;n angular del telescopio es una medida del detalle m&aacute;s peque&ntilde;o (en t&eacute;rminos de tama&ntilde; 
+           angular aparente) en el cielo que puede distinguir con el telescopio. Por ejemplo, si el equipo tiene una resoluci&oacute;n de
+           3 segundos de arco y una estrella tiene una separaci&oacute;n de 1.5 segundos de arco, no ser&aacute; posible ver las estrellas
+           individuales y el par en realidad se ver&aacute; como un solo punto brillante. La resoluci&oacute;n est&aacute; directamente
+           relacionada con el di&aacute;metro de la apertura del telescopio. Un di&aacute;metro mayor porporcionar&aacute; una mayor
+           resoluci&oacute;n. Esta cantidad tambi&eacute; se ve afectada por la difracci&oacute;n de la luz (una desviaci&oacute;n ligera de
+           las ondas de luz al atravesar la apertura del instrumento), por lo que est&aacute; determinada por el dise&ntilde;o optico del
+           instrumento. Para obtener un valor representativo, la calculadora utiliza la f&oacute;rmula de Dawes. Un telescopio de 60mm de
+           di&aacute;metro tiene una resoluci&oacute;n angular de 1.9 segundos de arco. Como referencia, como se muestra m&aacute;s arriba, 
+           el C&uacute;mulo Globular de H&eacute;rcules (M13) mide aproximadamente 1200 segundos de arco, la Nebulosa del Anillo (M57) tiene 
+           un tama&ntilde;o aproximado de 230 segundos de arco, Albireo A y B est&aacute;n separados por 35 segundos de arco, y la 
+           Divisi&oacute;n Cassini de Saturno mide menos de 1 segundo de arco.   
+          </p>
+        </section>
+
+        <!--Footer section-->
+        <div class="footer">
+          <footer>
+            <nav id="linksbar" class="linksbar">
+              <a href="#banner">Volver arriba</a>
+            </nav>
+            <section class="text-content text-center">
+              Gerardo Ram&oacute;n Fox &copy; 2021
+            </section>
+          </footer>
+        </div>
+
+        <script src="js/telescopeCalculator.js"></script>
+        <script src="js/telescopeCalcInterface.js"></script>
+  </body>
+</html>
